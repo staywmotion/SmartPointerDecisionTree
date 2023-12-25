@@ -158,7 +158,7 @@ inline TreeNodePtr create_tree(const Params& p) {
 TreeNodePtr get_result(TreeNodePtr node) {
 	unsigned nodeCount = 0;
 	if (TRACK_PATH) {
-		std::cout << "Dispalying travel path...\n";
+		std::cout << "Displaying travel path...\n";
 	}
 
 	while (node && node->process()) {
