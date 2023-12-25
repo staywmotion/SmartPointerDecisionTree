@@ -6,7 +6,7 @@
 */
 #pragma once
 #include <memory>
-#define TRACK_PATH true
+#define TRACK_PATH true // for debugging
 
 struct Params {
 	bool uses_market_testing;
@@ -167,6 +167,9 @@ TreeNodePtr get_result(TreeNodePtr node) {
 		}
 		node = node->process();
 	}
-	std::cout << '\n';
+
+	if (TRACK_PATH)
+		std::cout << '\n';
+
 	return node;
 }

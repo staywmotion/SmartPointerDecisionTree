@@ -67,7 +67,7 @@ int main(int argc, char* argv[]) {
 	else if (auto noTestModest = dynamic_pointer_cast<NoTestingModestLaunchNode>(resultNode))
 		cout << "No Testing Modest Launch with value: $" << fixed << setprecision(2) << noTestModest->value << "\n";
 	else
-		cout << "Unknown result.\n";
+		cout << "Unexpected or Unknown result....\n";
 
 
 	return 0;
