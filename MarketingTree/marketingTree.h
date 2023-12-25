@@ -159,17 +159,19 @@ TreeNodePtr get_result(TreeNodePtr node) {
 	unsigned nodeCount = 0;
 	if (TRACK_PATH) {
 		std::cout << "Displaying travel path...\n";
-	}
-
-	while (node && node->process()) {
-		if (TRACK_PATH) {
-			std::cout << ++nodeCount << "." << typeid(*node).name() + 6 << std::endl;
+		while (node && node->process()) {
+			if (TRACK_PATH) {
+				std::cout << ++nodeCount << "." << typeid(*node).name() + 6 << std::endl;
+			}
+			node = node->process();
 		}
-		node = node->process();
+		std::cout << '\n';
+		return node;
 	}
 
-	if (TRACK_PATH)
-		std::cout << '\n';
-
-	return node;
+	else {
+		while (node && node->process())
+			node = node->process();
+		return node;
+	}
 }
