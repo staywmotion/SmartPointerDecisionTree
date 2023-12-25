@@ -6,6 +6,7 @@
 */
 #pragma once
 #include <memory>
+#define TRACK_PATH true
 
 struct Params {
 	bool uses_market_testing;
@@ -86,27 +87,27 @@ struct NoTestingModestLaunchNode final : TreeNode {
 
 // DECISION NODES
 struct ProductLaunchStrategyNode final : TreeNode {
-	explicit ProductLaunchStrategyNode(const Params& p) : TreeNode(p){}
+	explicit ProductLaunchStrategyNode(const Params& p) : TreeNode(p) {}
 	TreeNodePtr process() const override {
 		return params.uses_market_testing ? left_ : right_;
 	}
 };
 
 struct RatingNode final : TreeNode {
-	explicit RatingNode(const Params& p) : TreeNode(p){}
+	explicit RatingNode(const Params& p) : TreeNode(p) {}
 	TreeNodePtr process() const override {
 		return params.has_positive_rating ? right_ : left_;
 	}
 };
 
 struct LaunchOutcomeNode final : TreeNode {
-	explicit LaunchOutcomeNode(const Params& p) : TreeNode(p){}
+	explicit LaunchOutcomeNode(const Params& p) : TreeNode(p) {}
 	TreeNodePtr process() const override {
-		if (params.successful_launch) 
+		if (params.successful_launch)
 			return right_;
-		else if (params.modest_launch) 
+		else if (params.modest_launch)
 			return middle_;
-		else 
+		else
 			return left_;
 	}
 };
@@ -153,8 +154,19 @@ inline TreeNodePtr create_tree(const Params& p) {
 	return root;
 }
 
+
 TreeNodePtr get_result(TreeNodePtr node) {
-	while (node && node->process()) 
-		node = node->process(); 
-	return node; 
+	unsigned nodeCount = 0;
+	if (TRACK_PATH) {
+		std::cout << "Dispalying travel path...\n";
+	}
+
+	while (node && node->process()) {
+		if (TRACK_PATH) {
+			std::cout << ++nodeCount << "." << typeid(*node).name() + 6 << std::endl;
+		}
+		node = node->process();
+	}
+	std::cout << '\n';
+	return node;
 }
